@@ -61,8 +61,7 @@
             <adminhtml>
                 <args>
                     <modules>
-                        <Learning_BrandModule_Adminhtml before="Mage_Adminhtml">Learning_BrandModule_Adminhtml
-                        </Learning_BrandModule_Adminhtml>
+                        <Learning_BrandModule_Adminhtml before="Mage_Adminhtml">Learning_BrandModule_Adminhtml</Learning_BrandModule_Adminhtml>
                     </modules>
                 </args>
             </adminhtml>

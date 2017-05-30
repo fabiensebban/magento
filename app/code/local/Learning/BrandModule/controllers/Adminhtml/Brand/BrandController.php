@@ -1,205 +1,139 @@
 <?php
 
-class Learning_Slider_Adminhtml_Slider_SlideController extends Mage_Adminhtml_Controller_Action
+class Learning_BrandModule_Adminhtml_Brand_BrandController extends Mage_Adminhtml_Controller_Action
 {
     /**
-     * @return Mage_Adminhtml_Controller_Action
-     */
-    protected function _initAction()
-    {
-        return $this->loadLayout()->_setActiveMenu('learning_slider');
-    }
-
-    /**
-     * @return Mage_Core_Controller_Varien_Action
+     * Instantiate our grid container block and add to the page content.
+     * When accessing this admin index page we will see a grid of all
+     * brands currently available in our Magento instance, along with
+     * a button to add a new one if we wish.
      */
     public function indexAction()
     {
-        return $this->_initAction()->renderLayout();
+        // instantiate the grid container
+        $brandBlock = $this->getLayout()
+            ->createBlock('learning_brandmodule/adminhtml_brand');
+
+        // add the grid container as the only item on this page
+        $this->loadLayout()
+            ->_addContent($brandBlock)
+            ->renderLayout();
     }
 
     /**
-    * @return $this
-    */
-    public function newAction()
-    {
-      $this->_forward('edit');
-
-      return $this;
-    }
-
-    /**
-    * @return $this|Mage_Core_Controller_Varien_Action
-    */
+     * This action handles both viewing and editing of existing brands.
+     */
     public function editAction()
     {
-        $id = $this->getRequest()->getParam('id');
-        /** @var Learning_Slider_Model_Slide $slide */
-        $slide = Mage::getModel('learning_slider/slide')->load($id);
-
-        if ($slide->getId() || $id == 0) {
-
-          $data = Mage::getSingleton('adminhtml/session')->getFormData(true);
-          if (!empty($data)) {
-              $slide->setData($data);
-          }
-          Mage::register('slide_data', $slide);
-
-          return $this->_initAction()->renderLayout();
+        /**
+         * retrieving existing brand data if an ID was specified,
+         * if not we will have an empty Brand entity ready to be populated.
+         */
+        $brand = Mage::getModel('learning_brandmodule/brand');
+        if ($brandId = $this->getRequest()->getParam('id', false)) {
+            $brand->load($brandId);
+            if ($brand->getId() < 1) {
+                $this->_getSession()->addError(
+                    $this->__('This brand no longer exists.')
+                );
+                return $this->_redirect(
+                    'learning_brandmodule_admin/brand/index'
+                );
+            }
         }
 
-        Mage::getSingleton('adminhtml/session')->addError(Mage::helper('learning_slider')->__('Slide does not exist'));
-
-        return $this->_redirect('*/*/');
-    }
-
-    /**
-     * @return $this|Mage_Core_Controller_Varien_Action
-     */
-    public function saveAction()
-    {
-        if ($data = $this->getRequest()->getPost()) {
-
-            $delete = (!isset($data['image_url']['delete']) || $data['image_url']['delete'] != '1') ? false : true;
-            $data['image_url'] = $this->_saveImage('image_url', $delete);
-
-            /** @var Learning_Slider_Model_Slide $slide */
-            $slide = Mage::getModel('learning_slider/slide');
-
-            if ($id = $this->getRequest()->getParam('id')) {
-                $slide->load($id);
-            }
-
+        // process $_POST data if the form was submitted
+        if ($postData = $this->getRequest()->getPost('brandData')) {
             try {
-                $slide->addData($data);
-                $slide->save();
+                $brand->addData($postData);
+                $brand->save();
 
-                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('learning_slider')->__('The slide has been saved.'));
-                Mage::getSingleton('adminhtml/session')->setFormData(false);
+                $this->_getSession()->addSuccess(
+                    $this->__('The brand has been saved.')
+                );
 
-                if ($this->getRequest()->getParam('back')) {
-                    $this->_redirect('*/*/edit', array(
-                            'id'       => $slide->getId(),
-                            '_current' => true
-                        ));
-
-                    return;
-                }
-
-                $this->_redirect('*/*/');
-
-                return;
-            } catch (Mage_Core_Exception $e) {
-                $this->_getSession()->addError($e->getMessage());
+                // redirect to remove $_POST data from the request
+                return $this->_redirect(
+                    'learning_brandmodule_admin/brand/edit',
+                    array('id' => $brand->getId())
+                );
             } catch (Exception $e) {
+                Mage::logException($e);
                 $this->_getSession()->addError($e->getMessage());
-                $this->_getSession()->addException($e, Mage::helper('learning_slider')->__('An error occurred while saving the slide.'));
             }
 
-            $this->_getSession()->setFormData($data);
-            $this->_redirect('*/*/edit', array(
-                    'id' => $this->getRequest()->getParam('id')
-                ));
-
-            return;
+            /**
+             * if we get to here then something went wrong. Continue to
+             * render the page as before, the difference being this time
+             * the submitted $_POST data is available.
+             */
         }
-        $this->_redirect('*/*/');
+
+        // make the current brand object available to blocks
+        Mage::register('current_brand', $brand);
+
+        // instantiate the form container
+        $brandEditBlock = $this->getLayout()->createBlock(
+            'learning_brandmodule/adminhtml_brand_edit'
+        );
+
+        // add the form container as the only item on this page
+        $this->loadLayout()
+            ->_addContent($brandEditBlock)
+            ->renderLayout();
     }
 
-    /**
-     * @return $this|Mage_Core_Controller_Varien_Action
-     */
     public function deleteAction()
     {
-        if ($id = $this->getRequest()->getParam('id')) {
-            try {
-                /** @var Learning_Slider_Model_Slide $slide */
-                $slide = Mage::getModel('learning_slider/slide');
-                $slide->load($id)->delete();
-
-                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('learning_slider')->__('Slide was successfully deleted'));
-                $this->_redirect('*/*/');
-
-                return;
-            } catch (Exception $e) {
-                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-                $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
-
-                return;
-            }
+        $brand = Mage::getModel('learning_brandmodule/brand');
+        if ($brandId = $this->getRequest()->getParam('id', false)) {
+            $brand->load($brandId);
         }
 
-        return $this->_redirect('*/*/');
+        if ($brand->getId() < 1) {
+            $this->_getSession()->addError(
+                $this->__('This brand no longer exists.')
+            );
+            return $this->_redirect(
+                'learning_brandmodule_admin/brand/index'
+            );
+        }
+
+        try {
+            $brand->delete();
+
+            $this->_getSession()->addSuccess(
+                $this->__('The brand has been deleted.')
+            );
+        } catch (Exception $e) {
+            Mage::logException($e);
+            $this->_getSession()->addError($e->getMessage());
+        }
+        return $this->_redirect(
+            'learning_brandmodule_admin/brand/index'
+        );
     }
 
     /**
-     * NE PAS METTRE CETTE FONCTION DANS LE CONTROLLER !!!
+     * Thanks to Ben for pointing out this method was missing. Without
+     * this method the ACL rules configured in adminhtml.xml are ignored.
      */
-    protected function _saveImage($imageAttr, $delete)
+    protected function _isAllowed()
     {
-        if ($delete) {
-            $image = '';
-        } elseif (isset($_FILES[$imageAttr]['name']) && $_FILES[$imageAttr]['name'] != '') {
-            try {
-                $uploader = new Varien_File_Uploader($imageAttr);
-                $uploader->setAllowedExtensions(array('jpg', 'jpeg', 'png'));
-                $uploader->setAllowRenameFiles(false);
-                $uploader->setFilesDispersion(false);
-                $path = Mage::getBaseDir('media') . DS . 'slide' . DS;
-                $uploader->save($path, $_FILES[$imageAttr]['name']);
-                $image = $_FILES[$imageAttr]['name'];
-            } catch (Exception $e) {
-                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-                return $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
-            }
-        } else {
-            $model = Mage::getModel('learning_slider/slide')->load($this->getRequest()->getParam('id'));
-            $image = $model->getData($imageAttr);
-        }
-        return $image;
-    }
 
-    /**
-     * @return $this|Mage_Core_Controller_Varien_Action
-     */
-    public function massDeleteAction()
-    {
-        $slideIds = $this->getRequest()->getParam('slide');
-        if (!is_array($slideIds)) {
-            Mage::getSingleton('adminhtml/session')->addError(Mage::helper('learning_slider')->__('Please select slide(s)'));
-        } else {
-            try {
-                foreach ($slideIds as $slide) {
-                    Mage::getModel('learning_slider/slide')->load($slide)->delete();
-                }
-                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('learning_slider')->__('Total of %d slide(s) were successfully deleted', count($slideIds)));
-            } catch (Exception $e) {
-                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-            }
+        $actionName = $this->getRequest()->getActionName();
+        switch ($actionName) {
+            case 'index':
+            case 'edit':
+            case 'delete':
+                // intentionally no break
+            default:
+                $adminSession = Mage::getSingleton('admin/session');
+                $isAllowed = $adminSession
+                    ->isAllowed('learning_brandmodule/brand');
+                break;
         }
 
-        return $this->_redirect('*/*/index');
-    }
-
-    /**
-     * @return $this|Mage_Core_Controller_Varien_Action
-     */
-    public function massStatusAction()
-    {
-        $slideIds = $this->getRequest()->getParam('slide');
-        if (!is_array($slideIds)) {
-            Mage::getSingleton('adminhtml/session')->addError($this->__('Please select slide(s)'));
-        } else {
-            try {
-                foreach ($slideIds as $slide) {
-                    Mage::getSingleton('learning_slider/slide')->load($slide)->setIsActive($this->getRequest()->getParam('is_active'))->setIsMassupdate(true)->save();
-                }
-                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('learning_slider')->__('Total of %d slide(s) were successfully updated', count($slideIds)));
-            } catch (Exception $e) {
-                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-            }
-        }
-
-        return $this->_redirect('*/*/index');
+        return $isAllowed;
     }
 }
