@@ -1,3 +1,11 @@
-<?php
+<?php $slides = $this->getSlides(); ?>
+<?php $helper = Mage::helper('learning_slider'); ?>
+<ul class="bxslider">
 
-then_debug::dump(get_class_methods($this));
+    <?php foreach ($slides as $slide): ?>
+        <li>
+            <img src="<?php echo $helper->getImageUrl($slide->getImageUrl()); ?>" title="<?php echo $slide->getName(); ?>">
+        </li>
+    <?php endforeach; ?>
+
+</ul>

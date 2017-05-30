@@ -158,4 +158,48 @@ class Learning_Slider_Adminhtml_Slider_SlideController extends Mage_Adminhtml_Co
         }
         return $image;
     }
+
+    /**
+     * @return $this|Mage_Core_Controller_Varien_Action
+     */
+    public function massDeleteAction()
+    {
+        $slideIds = $this->getRequest()->getParam('slide');
+        if (!is_array($slideIds)) {
+            Mage::getSingleton('adminhtml/session')->addError(Mage::helper('learning_slider')->__('Please select slide(s)'));
+        } else {
+            try {
+                foreach ($slideIds as $slide) {
+                    Mage::getModel('learning_slider/slide')->load($slide)->delete();
+                }
+                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('learning_slider')->__('Total of %d slide(s) were successfully deleted', count($slideIds)));
+            } catch (Exception $e) {
+                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+            }
+        }
+
+        return $this->_redirect('*/*/index');
+    }
+
+    /**
+     * @return $this|Mage_Core_Controller_Varien_Action
+     */
+    public function massStatusAction()
+    {
+        $slideIds = $this->getRequest()->getParam('slide');
+        if (!is_array($slideIds)) {
+            Mage::getSingleton('adminhtml/session')->addError($this->__('Please select slide(s)'));
+        } else {
+            try {
+                foreach ($slideIds as $slide) {
+                    Mage::getSingleton('learning_slider/slide')->load($slide)->setIsActive($this->getRequest()->getParam('is_active'))->setIsMassupdate(true)->save();
+                }
+                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('learning_slider')->__('Total of %d slide(s) were successfully updated', count($slideIds)));
+            } catch (Exception $e) {
+                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+            }
+        }
+
+        return $this->_redirect('*/*/index');
+    }
 }
