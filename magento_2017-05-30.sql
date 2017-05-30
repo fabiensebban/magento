@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.42)
 # Database: magento
-# Generation Time: 2017-05-30 10:51:46 +0000
+# Generation Time: 2017-05-30 12:54:20 +0000
 # ************************************************************
 
 
@@ -124,7 +124,7 @@ LOCK TABLES `mg_admin_user` WRITE;
 
 INSERT INTO `mg_admin_user` (`user_id`, `firstname`, `lastname`, `email`, `username`, `password`, `created`, `modified`, `logdate`, `lognum`, `reload_acl_flag`, `is_active`, `extra`, `rp_token`, `rp_token_created_at`)
 VALUES
-	(1,'Fabien','Sebban','fa.sebban@gmail.com','fabiensebban','4c4a570290e6f0eee85b50b0e0f87332:i5WYsUTNm5ZYcuYafY5MKRRvPwWdRBNd','2017-05-29 09:14:51','2017-05-29 09:14:51','2017-05-30 08:16:28',4,0,1,'b:0;',NULL,NULL);
+	(1,'Fabien','Sebban','fa.sebban@gmail.com','fabiensebban','4d0e06ac710059e4ad80eda8f2272aa5:ef23i2Ulb04JGBlGkANO306kg6rmh69F','2017-05-29 09:14:51','2017-05-30 12:53:32','2017-05-30 12:53:46',6,0,1,'b:0;',NULL,NULL);
 
 /*!40000 ALTER TABLE `mg_admin_user` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -258,7 +258,8 @@ VALUES
 	(101,4,'2008-11-08 04:46:42','Reminder: Change Magento`s default phone numbers and callouts before site launch','Before launching your Magento store, please remember to change Magento`s default phone numbers that appear in email templates, callouts, templates, etc.','',0,0),
 	(102,4,'2008-11-08 04:46:42','Reminder: Change Magento`s default phone numbers and callouts before site launch','Before launching your Magento store, please remember to change Magento`s default phone numbers that appear in email templates, callouts, templates, etc.','',0,0),
 	(103,4,'2008-11-08 04:46:42','Reminder: Change Magento`s default phone numbers and callouts before site launch','Before launching your Magento store, please remember to change Magento`s default phone numbers that appear in email templates, callouts, templates, etc.','',0,0),
-	(104,4,'2008-11-08 04:46:42','Reminder: Change Magento`s default phone numbers and callouts before site launch','Before launching your Magento store, please remember to change Magento`s default phone numbers that appear in email templates, callouts, templates, etc.','',0,0);
+	(104,4,'2008-11-08 04:46:42','Reminder: Change Magento`s default phone numbers and callouts before site launch','Before launching your Magento store, please remember to change Magento`s default phone numbers that appear in email templates, callouts, templates, etc.','',0,0),
+	(105,4,'2008-11-08 04:46:42','Reminder: Change Magento`s default phone numbers and callouts before site launch','Before launching your Magento store, please remember to change Magento`s default phone numbers that appear in email templates, callouts, templates, etc.','',0,0);
 
 /*!40000 ALTER TABLE `mg_adminnotification_inbox` ENABLE KEYS */;
 UNLOCK TABLES;
