@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<config>
-    <modules>
-        <Learning_BrandModule>
-            <active>true</active>
-            <codePool>local</codePool>
-        </Learning_BrandModule>
-    </modules>
-</config>
