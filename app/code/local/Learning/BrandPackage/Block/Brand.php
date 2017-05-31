@@ -12,12 +12,10 @@ class Learning_BrandPackage_Block_Brand extends Mage_Core_Block_Template
         return 'Magento is so amazing !';
     }
 
-    public function getSlides()
+    public function getBrands()
     {
     	$slides = Mage::getModel('learning_brandpackage/brand')
-            		->getCollection()
-            		->addIsActiveFilter()
-            		->addOrderByPosition();
+            		->getCollection();
 
     	return $slides;
     }

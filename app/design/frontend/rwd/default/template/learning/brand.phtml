@@ -1,0 +1,12 @@
+<?php $brands = $this->getBrands(); ?>
+
+  <ul>
+
+
+  <?php foreach ($brands as $brand): ?>
+    <li>
+      <?php echo $brand->getName(); ?>
+    </li>
+  <?php endforeach; ?>
+
+  </ul>

@@ -53,6 +53,13 @@ class Learning_BrandPackage_Block_Adminhtml_Brand_Grid extends Mage_Adminhtml_Bl
                 'index'  => 'description'
         ));
 
+        $this->addColumn('slug', array(
+            'header' => $this->__('Slug'),
+            'align'  => 'right',
+            'width'  => '100px',
+            'index'  => 'slug'
+        ));
+
         return parent::_prepareColumns();
     }
 

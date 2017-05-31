@@ -134,33 +134,6 @@ class Learning_BrandPackage_Adminhtml_Brand_BrandController extends Mage_Adminht
     }
 
     /**
-     * NE PAS METTRE CETTE FONCTION DANS LE CONTROLLER !!!
-     */
-    protected function _saveImage($imageAttr, $delete)
-    {
-        if ($delete) {
-            $image = '';
-        } elseif (isset($_FILES[$imageAttr]['name']) && $_FILES[$imageAttr]['name'] != '') {
-            try {
-                $uploader = new Varien_File_Uploader($imageAttr);
-                $uploader->setAllowedExtensions(array('jpg', 'jpeg', 'png'));
-                $uploader->setAllowRenameFiles(false);
-                $uploader->setFilesDispersion(false);
-                $path = Mage::getBaseDir('media') . DS . 'brand' . DS;
-                $uploader->save($path, $_FILES[$imageAttr]['name']);
-                $image = $_FILES[$imageAttr]['name'];
-            } catch (Exception $e) {
-                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-                return $this->_redirect('*/*/edit', array('id' => $this->getRequest()->getParam('id')));
-            }
-        } else {
-            $model = Mage::getModel('learning_brandpackage/brand')->load($this->getRequest()->getParam('id'));
-            $image = $model->getData($imageAttr);
-        }
-        return $image;
-    }
-
-    /**
      * @return $this|Mage_Core_Controller_Varien_Action
      */
     public function massDeleteAction()
@@ -182,25 +155,4 @@ class Learning_BrandPackage_Adminhtml_Brand_BrandController extends Mage_Adminht
         return $this->_redirect('*/*/index');
     }
 
-    /**
-     * @return $this|Mage_Core_Controller_Varien_Action
-     */
-    public function massStatusAction()
-    {
-        $slideIds = $this->getRequest()->getParam('brand');
-        if (!is_array($slideIds)) {
-            Mage::getSingleton('adminhtml/session')->addError($this->__('Please select brand(s)'));
-        } else {
-            try {
-                foreach ($slideIds as $slide) {
-                    Mage::getSingleton('learning_brandpackage/brand')->load($slide)->setIsActive($this->getRequest()->getParam('is_active'))->setIsMassupdate(true)->save();
-                }
-                Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('learning_brandpackage')->__('Total of %d brand(s) were successfully updated', count($slideIds)));
-            } catch (Exception $e) {
-                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
-            }
-        }
-
-        return $this->_redirect('*/*/index');
-    }
 }

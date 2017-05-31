@@ -16,4 +16,8 @@ class Learning_BrandPackage_Model_Brand extends Mage_Core_Model_Abstract
     {
         $this->_init('learning_brandpackage/brand');
     }
+
+    public function loadInstanceBySlug($slug){
+      return $this->_getResource()->loadInstanceBySlug($slug,$this);
+    }
 }
