@@ -1,0 +1,18 @@
+####################################
+#
+# Algolia Search
+#
+####################################
+
+app/etc/modules/Algolia_Algoliasearch.xml                           app/etc/modules/Algolia_Algoliasearch.xml
+app/code/community/Algolia/Algoliasearch/                           app/code/community/Algolia/Algoliasearch/
+app/design/frontend/base/default/layout/algoliasearch.xml           app/design/frontend/base/default/layout/algoliasearch.xml
+app/design/frontend/base/default/template/algoliasearch/            app/design/frontend/base/default/template/algoliasearch/
+app/design/adminhtml/default/default/layout/algoliasearch.xml       app/design/adminhtml/default/default/layout/algoliasearch.xml
+app/design/adminhtml/default/default/template/algoliasearch/        app/design/adminhtml/default/default/template/algoliasearch/
+app/locale/en_US/Algolia_Algoliasearch.csv                          app/locale/en_US/Algolia_Algoliasearch.csv
+app/locale/sv_SE/Algolia_Algoliasearch.csv                          app/locale/sv_SE/Algolia_Algoliasearch.csv
+app/locale/nl_NL/Algolia_Algoliasearch.csv                          app/locale/nl_NL/Algolia_Algoliasearch.csv
+skin/frontend/base/default/algoliasearch/                           skin/frontend/base/default/algoliasearch/
+js/algoliasearch/                                                   js/algoliasearch/
+lib/AlgoliaSearch/                                                  lib/AlgoliaSearch/
