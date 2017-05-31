@@ -13,7 +13,8 @@
             </block>
         </reference>
         <reference name="left">
-            <block type="learning_brandpackage/adminhtml_brand_edit_tabs" name="learning_brandpackage_adminhtml_brand_edit_tabs">
+            <block type="learning_brandpackage/adminhtml_brand_edit_tabs"
+                   name="learning_brandpackage_adminhtml_brand_edit_tabs">
                 <block type="learning_brandpackage/adminhtml_brand_edit_tab_form"
                        name="learning_brandpackage_adminhtml_brand_edit_tab_form"/>
                 <action method="addTab">
@@ -23,4 +24,29 @@
             </block>
         </reference>
     </adminhtml_brand_brand_edit>
+
+    <adminhtml_brand_brand_products>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="learning_brandpackage/adminhtml_brand_edit_tab_product" name="brand.edit.tab.product"/>
+            <block type="adminhtml/widget_grid_serializer" name="product_grid_serializer">
+                <reference name="product_grid_serializer">
+                    <action method="initSerializerBlock">
+                        <grid_block_name>brand.edit.tab.product</grid_block_name>
+                        <data_callback>getSelectedProducts</data_callback>
+                        <hidden_input_name>products</hidden_input_name>
+                        <reload_param_name>brand_products</reload_param_name>
+                    </action>
+                    <action method="addColumnInputName">
+                        <input_name>position</input_name>
+                    </action>
+                </reference>
+            </block>
+        </block>
+    </adminhtml_brand_brand_products>
+    <adminhtml_brand_brand_productsgrid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="learning_brandpackage/adminhtml_brand_edit_tab_product" name="brand.edit.tab.product"/>
+        </block>
+    </adminhtml_brand_brand_productsgrid>
+
 </layout>

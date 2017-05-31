@@ -64,23 +64,29 @@ class Learning_BrandPackage_Adminhtml_Brand_BrandController extends Mage_Adminht
             $delete = (!isset($data['image_url']['delete']) || $data['image_url']['delete'] != '1') ? false : true;
             $data['image_url'] = $this->_saveImage('image_url', $delete);
             */
-            /** @var Learning_Slider_Model_Slide $slide */
-            $slide = Mage::getModel('learning_brandpackage/brand');
+            /** @var Learning_BrandPackage_Model_Brand $brand */
+            $brand = Mage::getModel('learning_brandpackage/brand');
 
             if ($id = $this->getRequest()->getParam('id')) {
-                $slide->load($id);
+                $brand->load($id);
             }
 
             try {
-                $slide->addData($data);
-                $slide->save();
+                $brand->addData($data);
+
+                $products = $this->getRequest()->getPost('products', -1);
+                if ($products != -1) {
+                    $brand->setProductsData(Mage::helper('adminhtml/js')->decodeGridSerializedInput($products));
+                }
+
+                $brand->save();
 
                 Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('learning_brandpackage')->__('The brand has been saved.'));
                 Mage::getSingleton('adminhtml/session')->setFormData(false);
 
                 if ($this->getRequest()->getParam('back')) {
                     $this->_redirect('*/*/edit', array(
-                            'id'       => $slide->getId(),
+                            'id'       => $brand->getId(),
                             '_current' => true
                         ));
 
@@ -203,4 +209,31 @@ class Learning_BrandPackage_Adminhtml_Brand_BrandController extends Mage_Adminht
 
         return $this->_redirect('*/*/index');
     }
+
+    public function productsAction(){
+        $this->_initBrand();
+        $this->loadLayout();
+        $this->getLayout()->getBlock('brand.edit.tab.product')
+            ->setBrandProducts($this->getRequest()->getPost('brand_products', null));
+        $this->renderLayout();
+    }
+
+    public function productsgridAction(){
+            $this->_initBrand();
+            $this->loadLayout();
+            $this->getLayout()->getBlock('brand.edit.tab.product')
+                ->setBrandProducts($this->getRequest()->getPost('brand_products', null));
+        $this->renderLayout();
+    }
+
+    protected function _initBrand()
+    {
+        $id = $this->getRequest()->getParam('id');
+        /** @var Learning_BrandPackage_Model_Brand $merchantman */
+        $merchantman = Mage::getModel('learning_brandpackage/brand')->load($id);
+        if ($merchantman->getId() || $id == 0) {
+            Mage::register('current_brand', $merchantman);
+        }
+    }
+
 }
