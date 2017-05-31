@@ -9,8 +9,13 @@ class Learning_BrandPackage_IndexController extends Mage_Core_Controller_Front_A
 
     }
 
-    public function showAction()
+    public function detailAction()
     {
-      die('this is show action !');
+      $slug = $this->getRequest()->getParam('name');
+      $entity = Mage::getModel('learning_brandpackage/brand')->loadInstanceBySlug($slug);
+      Mage::register('current_entity',$entity);
+
+      $this->loadLayout();
+      $this->renderLayout();
     }
 }

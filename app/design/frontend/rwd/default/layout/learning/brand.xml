@@ -16,4 +16,21 @@
                     </action>
                 </reference>
 		</learning_brandpackage_index_index>
+
+		<learning_brandpackage_index_detail>
+				<reference name="content">
+						<block type="learning_brandpackage/brand"  name="learning_brandpackage.brand" template="learning/detail.phtml" />
+				</reference>
+                <reference name="head">
+                    <action method="addJs"><script>learning/jquery/jquery.bxslider.js</script></action>
+                    <action method="addItem">
+                        <type>skin_js</type>
+                        <name>learning/js/scripts.js</name>
+                    </action>
+                    <action method="addItem">
+                        <type>skin_css</type>
+                        <name>learning/css/style.css</name>
+                    </action>
+                </reference>
+		</learning_brandpackage_index_detail>
 </layout>

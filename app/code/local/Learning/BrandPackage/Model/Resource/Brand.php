@@ -21,7 +21,6 @@ class Learning_BrandPackage_Model_Resource_Brand extends Mage_Core_Model_Resourc
         $slug = $this->createSlug($slide->getName());
         $verifSlug = $this->checkIfSlugExists($slug,$slide->getId());
         $slide->setSlug($verifSlug);
-        var_dump($slide);die();
         parent::_beforeSave($slide);
         return $this;
     }

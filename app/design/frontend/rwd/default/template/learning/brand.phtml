@@ -10,3 +10,13 @@
   <?php endforeach; ?>
 
   </ul>
+
+<ul>
+  <?php foreach ($brands as $brand): ?>
+    <li>
+    <a href="<?php echo Mage::getUrl('brand/index/detail', array('name' => $brand->getSlug())) ; ?>">
+      <?php echo $brand->getName(); ?>
+    </a>
+    </li>
+  <?php endforeach; ?>
+</ul>
