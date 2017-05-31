@@ -13,7 +13,6 @@ class Learning_BrandModule_Block_Adminhtml_Brand_Edit extends Mage_Adminhtml_Blo
          * this form container. In our example, this corresponds
          * to BrandDirectory/Block/Adminhtml/Brand/Edit/.
          */
-        $this->_mode = 'edit';
 
         $newOrEdit = $this->getRequest()->getParam('id')
             ? $this->__('Edit')

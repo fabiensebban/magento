@@ -3,6 +3,16 @@
 class Learning_BrandModule_Adminhtml_Brand_BrandController extends Mage_Adminhtml_Controller_Action
 {
     /**
+     * @return $this
+     */
+    public function newAction()
+    {
+        $this->_forward('edit');
+
+        return $this;
+    }
+
+    /**
      * Instantiate our grid container block and add to the page content.
      * When accessing this admin index page we will see a grid of all
      * brands currently available in our Magento instance, along with
