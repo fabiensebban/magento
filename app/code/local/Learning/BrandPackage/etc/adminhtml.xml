@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <menu>
+        <learning_brandpackage translate="title" module="learning_brandpackage">
+            <title>Brand Package</title>
+            <sort_order>70</sort_order>
+            <children>
+                <brand_brand translate="title" module="learning_brandpackage">
+                    <title>Manage Brands</title>
+                    <action>adminhtml/brand_brand</action>
+                    <sort_order>0</sort_order>
+                </brand_brand>
+            </children>
+        </learning_brandpackage>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <learning_brandpackage>
+                        <children>
+                            <brand_brand translate="title" module="learning_brandpackage">
+                                <title>Manage Brand</title>
+                                <sort_order>0</sort_order>
+                            </brand_brand>
+                        </children>
+                    </learning_brandpackage>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>
