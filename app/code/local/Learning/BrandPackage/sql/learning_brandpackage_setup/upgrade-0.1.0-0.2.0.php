@@ -1,7 +1,7 @@
 <?php
 
 $table = $this->getConnection()
-    ->newTable($this->getTable('learning_brandpackage/brand'))
+    ->newTable($this->getTable('learning_brandpackage/brand_product'))
     ->addColumn('rel_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
             'unsigned'  => true,
             'identity'  => true,
