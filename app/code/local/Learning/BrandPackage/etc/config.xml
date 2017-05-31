@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <modules>
-        <learning_BrandPackage>
-            <version>0.1.0</version>
-        </learning_BrandPackage>
+        <Learning_BrandPackage>
+            <version>0.2.0</version>
+        </Learning_BrandPackage>
     </modules>
     <global>
         <helpers>
@@ -21,14 +21,19 @@
                 <class>Learning_BrandPackage_Model</class>
                 <resourceModel>learning_brandpackage_resource</resourceModel>
             </learning_brandpackage>
+
             <learning_brandpackage_resource>
                 <class>Learning_BrandPackage_Model_Resource</class>
                 <entities>
                     <brand>
                         <table>learning_brandpackage_brand</table>
                     </brand>
+                    <brand_product>
+                        <table>learning_brand_product</table>
+                    </brand_product>
                 </entities>
             </learning_brandpackage_resource>
+
         </models>
         <resources>
             <learning_brandpackage_setup>
