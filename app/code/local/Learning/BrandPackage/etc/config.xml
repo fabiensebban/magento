@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Learning_BrandPackage>
-            <version>0.3.0</version>
+            <version>0.2.0</version>
         </Learning_BrandPackage>
     </modules>
     <global>
