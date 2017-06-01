@@ -22,6 +22,10 @@ class Learning_BrandPackage_Block_Brand extends Mage_Core_Block_Template
 
     public function getProducts($brand)
     {
-        return $brand->getSelectedProductsCollection()->addAttributeToSelect(['name', 'SKU', 'description', 'price', 'image']);
+        return $brand->getSelectedProductsCollection()
+                    ->addFieldToFilter('status', Mage_Catalog_Model_Product_Status::STATUS_ENABLED)
+                    ->setVisibility(array(Mage_Catalog_Model_Product_Visibility::VISIBILITY_BOTH, Mage_Catalog_Model_Product_Visibility::VISIBILITY_IN_CATALOG))
+                    //->load(true)
+                    ->addAttributeToSelect(['name', 'SKU', 'description', 'price', 'image']);
     }
 }
