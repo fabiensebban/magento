@@ -7,19 +7,16 @@
     $helper = Mage::helper('learning_brandpackage');
     echo "<br /><hr /><br />"
 ?>
-<div class="row">
 
   <?php foreach($products as $product): ?>
 
-    <div class="products-grid product-image" style="width:200px; height:350px; float:left; margin-left:5px;">
-      <img src="<?php echo $helper->getProductImageUrl($product); ?>" title="<?php echo $product->getName() ?>" class="img-responsive" style="width:100%">
+    <div class="products-grid product-image" style="width:200px; height:350px; float:left; margin-left:5px; margin-top:0px !important">
+      <img src="<?php echo $helper->getProductImageUrl($product); ?>" title="<?php echo $product->getName() ?>" class="img-responsive" style="max-width:250px; max-height:250px;">
       <div style="text-align:center; width:100%">
         <p><?php echo $product->getName()." <br />"; ?></p>
         <p><?php echo $product->getDescription()." <br />"; ?></p>
         <p><?php echo "SKU : ".$product->getSKU()." <br />"; ?></p>
       </div>
-    </div><br />
+    </div>
 
   <?php endforeach; ?>
-
-</div>
