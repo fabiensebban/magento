@@ -1,6 +1,18 @@
 <?php
 
-  $slugs = Mage::registry('current_entity');
-  echo "Name : ".$slugs->getName()."<br />";
-  echo "Slug : ".$slugs->getSlug()."<br />";
+    $brand = Mage::registry('current_entity');
+    echo "Name : ".$brand->getName()."<br />";
+    echo "Slug : ".$brand->getSlug()."<br />";
+    echo "Description : ".$brand->getDescription()."<br />";
+    $products = $brand->getSelectedProductsCollection();
 ?>
+
+    <ul>
+<?php
+    foreach($products as $product)
+    {
+
+    }
+?>
+
+    </ul>
