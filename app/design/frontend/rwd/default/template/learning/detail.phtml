@@ -4,14 +4,18 @@
     echo "Name : ".$brand->getName()."<br />";
     echo "Slug : ".$brand->getSlug()."<br />";
     echo "Description : ".$brand->getDescription()."<br />";
-    $products = $brand->getSelectedProductsCollection();
+    $products = $this->getProducts($brand);//  $brand->getSelectedProductsCollection();
 ?>
 
     <ul>
 <?php
     foreach($products as $product)
     {
-
+        var_dump($product->getSKU());
+        var_dump($product->getDescription());
+        var_dump($product->getImage());
+        var_dump($product->getName());
+        echo "<li>" . $product->getProductId() . "</li>";
     }
 ?>
 

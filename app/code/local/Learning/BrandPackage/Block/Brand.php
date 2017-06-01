@@ -14,9 +14,14 @@ class Learning_BrandPackage_Block_Brand extends Mage_Core_Block_Template
 
     public function getBrands()
     {
-    	$slides = Mage::getModel('learning_brandpackage/brand')
+    	$brands = Mage::getModel('learning_brandpackage/brand')
             		->getCollection();
 
-    	return $slides;
+    	return $brands;
+    }
+
+    public function getProducts($brand)
+    {
+        return $brand->getSelectedProductsCollection()->addAttributeToSelect(['name', 'SKU', 'description', 'price', 'image']);
     }
 }
